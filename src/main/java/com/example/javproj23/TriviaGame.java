@@ -40,17 +40,15 @@ public class TriviaGame extends Application {
         questions.add(new ComputerScienceQuestion("What is the most popular programming language?", "Java"));
         questions.add(new ComputerScienceQuestion("What does HTML stand for?", "Hypertext Markup Language"));
         questions.add(new ComputerScienceQuestion("What is the name of Apple's mobile operating system?", "iOS"));
-        questions.add(new VideoGamesQuestion("What is the most popular programming language?", "Java"));
-        questions.add(new VideoGamesQuestion("What does HTML stand for?", "Hypertext Markup Language"));
-        questions.add(new VideoGamesQuestion("What is the name of Apple's mobile operating system?", "iOS"));
-        questions.add(new SportsQuestion("What is the most popular programming language?", "Java"));
-        questions.add(new SportsQuestion("What does HTML stand for?", "Hypertext Markup Language"));
-        questions.add(new SportsQuestion("What is the name of Apple's mobile operating system?", "iOS"));
+        questions.add(new VideoGamesQuestion("What favorite game?", "D2"));
+        questions.add(new VideoGamesQuestion("What go yahoo?", "Mario"));
+        questions.add(new VideoGamesQuestion("What BOGOS BINTED", "XBOX"));
+
 
         // Set up the GUI
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        root.setSpacing(10);
+        root.setSpacing(5);
 
         Label categoryLabel = new Label("Select a category:");
         root.getChildren().add(categoryLabel);

@@ -1,4 +1,5 @@
 package com.example.javproj23;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.ArrayList;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TriviaGame extends Application {
     private ArrayList<Question> questions = new ArrayList<>();
@@ -20,6 +23,34 @@ public class TriviaGame extends Application {
     private TextField answerTextField = new TextField();
     private Button submitButton = new Button("Submit");
     private Label resultLabel = new Label();
+    private int scoreCount = 0;
+    private String filename = "C:\\Users\\cassi\\IdeaProjects\\javProj23\\src\\main\\java\\com\\example\\javproj23\\questions.txt";
+
+    private void saveQuestions() {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename));
+            outputStream.writeObject(questions);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadQuestions() {
+        File file = new File(filename);
+        if (!file.exists() || file.length() == 0) {
+            // The file is empty or does not exist
+            return;
+        }
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
+            questions = (ArrayList<Question>) inputStream.readObject();
+            inputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private ObservableList<Question> filterQuestionsByCategory(String category) {
         ObservableList<Question> filteredQuestions = FXCollections.observableArrayList();
         for (Question question : questions) {
@@ -45,6 +76,7 @@ public class TriviaGame extends Application {
         questions.add(new VideoGamesQuestion("What go yahoo?", "Mario"));
         questions.add(new VideoGamesQuestion("What BOGOS BINTED", "XBOX"));
 
+        loadQuestions();
 
         // Set up the GUI
         VBox root = new VBox();
@@ -70,6 +102,7 @@ public class TriviaGame extends Application {
                 Question question = questionListView.getSelectionModel().getSelectedItem();
                 if (answer.equalsIgnoreCase(question.getAnswer())) {
                     resultLabel.setText("Correct!");
+                    scoreCount++;
                     questions.remove(question); // Remove the question from the list
                     questionListView.setItems(filterQuestionsByCategory(categoryListView.getSelectionModel().getSelectedItem())); // Update the question list view
                 } else {
@@ -78,6 +111,7 @@ public class TriviaGame extends Application {
                 answerTextField.clear();
                 questionLabel.setText(""); // Clear the question label
             }
+            saveQuestions();
         });
         root.getChildren().add(submitButton);
 
@@ -98,10 +132,15 @@ public class TriviaGame extends Application {
                     setText(question.getQuestion());
                 }
             }
+
         });
 
-        // Set up the stage
-        primaryStage.setScene(new Scene(root, 600, 400));
+        // Create a Scene object with the root node
+        Scene scene = new Scene(root, 600, 400);
+
+        // Set the scene on the primary stage and show it
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }

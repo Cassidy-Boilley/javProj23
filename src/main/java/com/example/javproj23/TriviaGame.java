@@ -1,5 +1,4 @@
 package com.example.javproj23;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class TriviaGame extends Application {
     private ArrayList<Question> questions = new ArrayList<>();
@@ -27,7 +26,8 @@ public class TriviaGame extends Application {
     private String filename = "C:\\Users\\cassi\\IdeaProjects\\javProj23\\src\\main\\java\\com\\example\\javproj23\\questions.txt";
 
     private void saveQuestions() {
-        try {
+        try { // When the function is called, the questions that are left unanswered are serialized and placed into a
+            // text file
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename));
             outputStream.writeObject(questions);
             outputStream.close();
@@ -42,7 +42,7 @@ public class TriviaGame extends Application {
             // The file is empty or does not exist
             return;
         }
-        try {
+        try { // read the contents of the deserializes the questions in the file and append them to the arraylist
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
             questions = (ArrayList<Question>) inputStream.readObject();
             inputStream.close();
@@ -52,6 +52,8 @@ public class TriviaGame extends Application {
     }
 
     private ObservableList<Question> filterQuestionsByCategory(String category) {
+        // Iterates over the questions list and checks if each Question object's category matches the category parameter.
+        // If the category matches, the Question object is added to a new ObservableList named filteredQuestions
         ObservableList<Question> filteredQuestions = FXCollections.observableArrayList();
         for (Question question : questions) {
             if (question.getCategory().equals(category)) {
@@ -60,6 +62,7 @@ public class TriviaGame extends Application {
         }
         return filteredQuestions;
     }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -117,7 +120,7 @@ public class TriviaGame extends Application {
 
         root.getChildren().add(resultLabel);
 
-        // Set up the list views
+    // Set up the list views
         categoryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             questionListView.setItems(filterQuestionsByCategory(newValue));
         });
@@ -135,12 +138,11 @@ public class TriviaGame extends Application {
 
         });
 
-        // Create a Scene object with the root node
+    // Create a Scene object with the root node
         Scene scene = new Scene(root, 600, 400);
 
-        // Set the scene on the primary stage and show it
+    // Set the scene on the primary stage and show it
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 }

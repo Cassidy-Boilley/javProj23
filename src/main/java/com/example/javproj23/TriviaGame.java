@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -90,7 +91,7 @@ public class TriviaGame extends Application {
         root.setAlignment(Pos.CENTER);
         root.setSpacing(5);
 
-        Label rules = new Label("Answer all questions correctly to win.");
+        Label rules = new Label("Answer 9 questions correctly to win.");
         root.getChildren().add(rules);
 
 
@@ -107,6 +108,20 @@ public class TriviaGame extends Application {
 
         root.getChildren().add(answerTextField);
 
+        StackPane stackPane = new StackPane(root);
+        Label congratsLabel = new Label("Congratulations! You answered all the questions correctly!");
+        Button closeCongratsButton = new Button("Close");
+        VBox congratsBox = new VBox(10, congratsLabel, closeCongratsButton);
+        congratsBox.setAlignment(Pos.CENTER);
+        congratsBox.setStyle("-fx-background-color: lightblue; -fx-padding: 20px;");
+        congratsBox.setVisible(false);
+
+        // Add the vbox and the congratulations screen to the stack pane
+        stackPane.getChildren().add(congratsBox);
+
+        // Create the scene
+        Scene scene = new Scene(stackPane, 600, 700);
+
         submitButton.setOnAction(event -> {
             String answer = answerTextField.getText();
             if (!answer.isEmpty() && !questionListView.getSelectionModel().isEmpty()) {
@@ -118,6 +133,9 @@ public class TriviaGame extends Application {
                     questionListView.setItems(filterQuestionsByCategory(categoryListView.getSelectionModel().getSelectedItem())); // Update the question list view
                 } else {
                     resultLabel.setText("Incorrect.");
+                }if (scoreCount == 9) {
+                    // Show the congratulations screen
+                    congratsBox.setVisible(true);
                 }
                 answerTextField.clear();
                 questionLabel.setText(""); // Clear the question label
@@ -146,8 +164,7 @@ public class TriviaGame extends Application {
 
         });
 
-    // Create a Scene object with the root node
-        Scene scene = new Scene(root, 600, 400);
+
 
     // Set the scene on the primary stage and show it
         primaryStage.setScene(scene);

@@ -75,9 +75,12 @@ public class TriviaGame extends Application {
         questions.add(new ComputerScienceQuestion("What is the most popular programming language?", "Java"));
         questions.add(new ComputerScienceQuestion("What does HTML stand for?", "Hypertext Markup Language"));
         questions.add(new ComputerScienceQuestion("What is the name of Apple's mobile operating system?", "iOS"));
-        questions.add(new VideoGamesQuestion("What favorite game?", "D2"));
-        questions.add(new VideoGamesQuestion("What go yahoo?", "Mario"));
-        questions.add(new VideoGamesQuestion("What BOGOS BINTED", "XBOX"));
+        questions.add(new VideoGamesQuestion("What is the highest selling video game of all time?", "Minecraft"));
+        questions.add(new VideoGamesQuestion("Which video game character was originally named Jumpman before being renamed?", "Mario"));
+        questions.add(new VideoGamesQuestion("What is the name of the main protagonist in the Legend of Zelda series?", "Link"));
+        questions.add(new SportsQuestion("Which country has won the most World Cup titles in men's soccer?", "Brazil"));
+        questions.add(new SportsQuestion("What is the oldest continuously held marathon in the world?", "The Boston Marathon"));
+        questions.add(new SportsQuestion("Who has won the most Grand Slam singles titles in women's tennis?", "Margaret Court"));
 
         loadQuestions();
 

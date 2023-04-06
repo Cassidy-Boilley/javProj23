@@ -1,4 +1,5 @@
 package com.example.javproj23;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,10 +10,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.*;
 import java.io.*;
 import java.util.ArrayList;
-
-
 public class TriviaGame extends Application {
     private ArrayList<Question> questions = new ArrayList<>();
     private ObservableList<String> categories = FXCollections.observableArrayList("Music", "TV",
@@ -131,11 +131,50 @@ public class TriviaGame extends Application {
                     scoreCount++;
                     questions.remove(question); // Remove the question from the list
                     questionListView.setItems(filterQuestionsByCategory(categoryListView.getSelectionModel().getSelectedItem())); // Update the question list view
+                    try {
+                        File soundFile = new File("correct.mp3");
+                        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioIn);
+                        clip.start();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnsupportedAudioFileException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     resultLabel.setText("Incorrect.");
+                    try {
+                        File soundFile = new File("boo.mp3");
+                        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioIn);
+                        clip.start();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnsupportedAudioFileException e) {
+                        throw new RuntimeException(e);
+                    }
                 }if (scoreCount == 9) {
                     // Show the congratulations screen
                     congratsBox.setVisible(true);
+                    try {
+                        File soundFile = new File("cheer.mp3");
+                        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioIn);
+                        clip.start();
+                    } catch (LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnsupportedAudioFileException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 answerTextField.clear();
                 questionLabel.setText(""); // Clear the question label
@@ -146,7 +185,7 @@ public class TriviaGame extends Application {
 
         root.getChildren().add(resultLabel);
 
-    // Set up the list views
+        // Set up the list views
         categoryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             questionListView.setItems(filterQuestionsByCategory(newValue));
         });
@@ -166,8 +205,14 @@ public class TriviaGame extends Application {
 
 
 
-    // Set the scene on the primary stage and show it
+        // Set the scene on the primary stage and show it
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
     }
+
+
+
+
 }

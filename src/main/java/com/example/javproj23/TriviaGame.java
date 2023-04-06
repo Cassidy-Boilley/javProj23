@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class TriviaGame extends Application {
     private ArrayList<Question> questions = new ArrayList<>();
     private ObservableList<String> categories = FXCollections.observableArrayList("Music", "TV",
-            "Computer Science", "Video Games");
+            "Computer Science", "Video Games", "Sports");
     private ListView<String> categoryListView = new ListView<>(categories);
     private ListView<Question> questionListView = new ListView<>();
     private Label questionLabel = new Label();

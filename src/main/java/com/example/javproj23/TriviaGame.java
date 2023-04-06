@@ -22,6 +22,7 @@ public class TriviaGame extends Application {
     private TextField answerTextField = new TextField();
     private Button submitButton = new Button("Submit");
     private Label resultLabel = new Label();
+    private Label rules = new Label();
     private int scoreCount = 0;
     private String filename = "C:\\Users\\cassi\\IdeaProjects\\javProj23\\src\\main\\java\\com\\example\\javproj23\\questions.txt";
 
@@ -88,6 +89,10 @@ public class TriviaGame extends Application {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setSpacing(5);
+
+        Label rules = new Label("Answer all questions correctly to win.");
+        root.getChildren().add(rules);
+
 
         Label categoryLabel = new Label("Select a category:");
         root.getChildren().add(categoryLabel);
